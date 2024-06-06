@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shoesky</title>
+    <!-- father icon -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- google icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- font logo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Freeman&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Madimi+One&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=REM:ital,wght@0,100..900;1,100..900&family=Sofia&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <!-- font content -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Freeman&family=Josefin+Sans&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Madimi+One&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=REM:ital,wght@0,100..900;1,100..900&family=Sofia&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <!-- scroll animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- my style -->
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- alpine js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./js/app.js"></script>
+</head>
+<body>
+    <nav class="navigasi" x-data>
+            <div class="bars">
+              <a href="" class="sub-bars" id="sub-bars"><i class="fa-solid fa-bars"></i></a>
+            </div>
+            <div class="logo" data-aos="fade-down"
+            data-aos-duration="700">
+              <h2>ShoesKy</h2>
+            </div>
+            <ul class=" nav" data-aos="fade-down"
+            data-aos-duration="700">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" id="close"><i class="fa-solid fa-xmark"></i></a></li>
+            </ul>
+            <div class="icon" data-aos="fade-down"
+            data-aos-duration="700">
+              <a href ="#" id="search-btn"><i data-feather="search"></i></a>
+                <a href="#" id="cart-btn">
+                  <i data-feather="shopping-cart"></i>
+                  <span class="notif-quantity" x-show="$store.shopCart.quantity" x-text="$store.shopCart.quantity"></span>
+                </a>
+            </div>
+            <!-- search from start -->
+            <div class="search-form">
+              <input type="search" id="search-box" placeholder="search here....">
+              <label for="search-box"><i data-feather="search"></i></label>
+            </div>
+            <!-- search from end -->
+            <!-- shooping cart start -->
+            <div class="shopping-cart">
+              <template x-for="(item, index), in $store.shopCart.items" x-keys="index">
+                <div class="cart-item">
+                <img :src="`./img/${item.img}`" :alt="item.name">
+                <div class="item-title">
+                  <h3 x-text="item.name"></h3>
+                  <div class="item-price">
+                    <span x-text="rupiah(item.price)"></span> &times;
+                    <button id="remove" @click="$store.shopCart.remove(item.id)">&minus;</button>
+                    <span x-text="item.quantity"></span>
+                    <button id="add" @click="$store.shopCart.add(item)">&plus;</button> &equals; 
+                    <span x-text="rupiah(item.total)"></span>
+                  </div>
+                </div>
+                <i data-feather="trash-2" class="remove-item"></i>
+                </div>
+              </template>
+              <h4 x-show="!$store.shopCart.items.length" style="margin-top: 14px;">Your shopping cart is still empty</h4>
+              <h4 x-show="$store.shopCart.items.length">Total : <span x-text="rupiah($store.shopCart.total)"></span></h4>
+              <div class="button-cart">
+                <button class="closecart-btn">close</button>
+                <button class="chekoutcart-btn chekout">chekout</button>
+              </div>
+            </div>
+            <!-- shooping cart end -->
+            <!-- payment chekout start -->
+           
+            <!-- payment chekout start -->
+    </nav>
+    <section class="home" id="home">
+        <div class="content-title" data-aos="fade-up"
+        data-aos-duration="1500">
+          <h2>New Arrivals</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, corporis, mollitia consectetur ipsam voluptatem voluptate quisquam, tempora praesentium omnis reiciendis qui veniam id eaque eveniet.</p>
+          <a href="#product" class="btn view-collection">View Collection<span>    <i class="fa-solid fa-arrow-right"></i></span></a>
+        </div>
+        <div class="img" data-aos="fade-up"
+        data-aos-duration="1500">
+          <img src="./img/shoes-header.png" alt="img-shoes">
+        </div>
+    </section>
+<!-- section product start-->
+    <sectiion class="product" id="product" x-data="products">
+      <h2>our collection</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum recusandae, quis pariatur magnam, explicabo tenetur voluptate, laudantium quidem voluptatibus doloribus voluptates ipsam dolorem? Architecto, dolorum.</p>
+      <div class="content">
+        <template x-for="(item, index) in items" x-key="index">
+        <div class="product-card" data-aos="fade-up"
+        data-aos-duration="1500">
+          <div class="img">
+            <img :src="`./img/${item.img}`" :alt="item.name">
+          </div>
+          <div class="title">
+            <h2 x-text="item.name"></h2>
+            <div class="stars">
+              <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="./img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="./img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="./img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="./img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="./img/feather-sprite.svg#star" />
+              </svg>
+            </div>
+            <div class="price">
+              <span x-text="rupiah(item.price)"></span>
+            </div>
+            <div class="button">
+              <a href="#" @click.prevent="$store.shopCart.add(item)" class="order btn">add to cart <span> <i class="fa-solid fa-cart-shopping"></i></span></a>
+            </div>
+          </div>
+        </div>
+      </template> 
+      </div>
+    </sectiion>
+<!-- section product end-->
+
+<!-- section about start -->
+<section class="about" id="about">
+
+  <div class="container-about">
+
+    <div class="about-title" data-aos="fade-up"
+    data-aos-duration="1500">
+      <h2>Nike The Bets</h2>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, cupiditate natus obcaecati pariatur voluptatibus eaque saepe fugiat. Blanditiis ducimus laboriosam, praesentium optio quisquam, illum aliquam dolores, reprehenderit sunt explicabo debitis!</p>
+    <a href="#">Buy Now</a>
+    </div>
+
+    <div class="img-about" data-aos="fade-up"
+    data-aos-duration="1500">
+      <img src="./img/shoes-header.png" alt="">
+    </div>
+  </div>
+
+</section>
+<!-- section about start -->
+
+<!-- section blog start -->
+
+<div class="about-gallery" id="blog">
+
+
+  <div class="gallery-img" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1500">
+    <img src="./img/Nike-Air-Force-1-Winter-Gore-Tex-in-Phantom-White---EUKICKS.png" alt="">
+    <h2>Get 20% OOF On Nike AF 1 Winter Gore-Tex</h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro sequi eos earum nisi. Reiciendis odit natus laboriosam. Fuga tempora enim iure repellendus voluptatem id molestias!</p>
+    <a href="#"class="readMore read-btn" >Raed More <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+  <div class="gallery-img" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1500">
+    <img src="./img/Fear-Of-God-Raid.png" alt="">
+    <h2>Best Nike Shoe Ever! Fear-Of-God-Raid</h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro sequi eos earum nisi. Reiciendis odit natus laboriosam. Fuga tempora enim iure repellendus voluptatem id molestias!</p>
+    <a href="#" class="readMore read-btn" >Raed More <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+  <div class="gallery-img" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1500">
+    <img src="./img/Nike-Fear-Of-God-Raid-Team.png" alt="">
+    <h2>Top 20 Shoes Nike Fear Of God Raid-Team </h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro sequi eos earum nisi. Reiciendis odit natus laboriosam. Fuga tempora enim iure repellendus voluptatem id molestias!</p>
+    <a href="#" class="readMore read-btn">Raed More <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+
+
+</div>
+
+<sectiion class="blog-product">
+  <div class="product-blog" >
+
+    <div class="shoes-box" data-aos="fade-up"
+    data-aos-duration="1500">
+      <img src="./img/black.png" alt="">
+    </div>
+
+    <div class="shoes-item">
+      <div id="item1" class="item-box active">
+        <img src="./img/black.png" alt="">
+      </div>
+
+      <div id="item2" class="item-box">
+        <img src="./img/blue.png" alt="">
+      </div>
+
+      <div id="item3" class="item-box">
+        <img src="./img/abu.png" alt="">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="content-blog" data-aos="fade-up"
+  data-aos-duration="1500">
+      <h2>Air Jordans 1</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe veritatis officia, laboriosam sint sequi dolorem, accusamus deserunt iusto architecto a in cum. Quam eveniet ipsum illum in nihil fuga modi.</p>
+      <button>Buy Now</button>
+  </div>
+
+</sectiion>
+<!-- section blog start -->
+<!-- footer start -->
+<div id="contact" class="contact-container">
+    <div class="contact">
+      <div class="navigation">
+        <h2>company</h2>
+        <p><a href="#home">Home</a></p>
+        <p><a href="#product">Product</a></p>
+        <p><a href="#about">About</a></p>
+        <p><a href="#blog">Blog</a></p>
+      </div>
+      <div class="help">
+        <h2>Help</h2>
+          <p>Contact us</p>
+          <p>FAQ</p>
+          <p>Help</p>
+          <p>Fores</p>
+      </div>
+      <div class="get-social">
+        <h2>Get Social</h2>
+        <p><i class="fa-brands fa-facebook-f"></i> <span>Facebook</span></p>
+        <p><i class="fa-brands fa-twitter"></i><span>Twitter</span></p>
+        <p><i class="fa-brands fa-square-instagram"></i><span>instagram</span></p>
+      </div>
+      <div class="contact-c">
+        <h2>Help</h2>
+          <p>phone : <span>+62 085677324</span></p>
+          <p>Email : <span>@dwikyprtm@gmail.com</span></p>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>&copy; Copyright 2024, @Dwikyprtm</p>
+  </footer>
+<!-- footer end -->
+    <!-- father icon -->
+    <script>
+        feather.replace();
+      </script>
+      <!-- scroll animation -->
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script>
+        AOS.init();
+      </script>
+      <!-- my script -->
+      <script src="./js/script.js"></script>
+</body>
+</html>
